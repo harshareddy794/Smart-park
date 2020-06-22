@@ -2,6 +2,8 @@ var express=require("express")
 var app=express();
 app.use(express.static("public"))
 app.set("view engine","ejs")
+
+var  bodyparser=require("body-parser")
 app.use(bodyparser.urlencoded({extended:true}))
 var methodOverride= require("method-override")
 app.use(methodOverride("method"))
@@ -45,7 +47,7 @@ app.get("/addslot",function(req,res){
 })
 
 app.get("/user",function(req,res){
-    res.render("user/login")
+    res.render("user/forgot")
 })
 
 
