@@ -1,14 +1,14 @@
+// ++++++++++++ Required packages +++++++++++++++++++
 var express=require("express")
 var app=express();
 app.use(express.static("public"))
 app.set("view engine","ejs")
-
 var  bodyparser=require("body-parser")
 app.use(bodyparser.urlencoded({extended:true}))
 var methodOverride= require("method-override")
 app.use(methodOverride("method"))
-// ++++++++++++ Required packages +++++++++++++++++++
 
+// +++++++++++++++ Mongoose setup +++++++++++++++++++
 var mongoose=require("mongoose")
 mongoose.connect("mongodb://localhost/smart-parking",{useNewUrlParser:true,useUnifiedTopology:true},function(err){
     if(err){
@@ -20,9 +20,13 @@ mongoose.connect("mongodb://localhost/smart-parking",{useNewUrlParser:true,useUn
 // ++++++++++++++++++ Models +++++++++++++++++++
 var slot=require("./models/slots")
 
+
+
 app.get("/",function(req,res){
-    res.send("Welcome to smart parking");
+    res.render("landing")
 })
+
+// +++++++++++++ Routes +++++++++++++++++++++
 app.get("/slots",function(req,res){
     slot.find({},function(err,slots){
         if(err){
@@ -45,11 +49,10 @@ app.get("/addslot",function(req,res){
     res.send("Done!")
     })
 })
+// +++++++++++++ user routes +++++++++++++++
 
-app.get("/user",function(req,res){
-    res.render("user/forgot")
-})
-
+var userRoutes=require("./routes/user")
+app.use(userRoutes)
 
 // +++++++++++ App listening ++++++++++++++++++++
 
