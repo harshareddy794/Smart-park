@@ -37,13 +37,13 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="signup.html">Signup</a>
+                    <a href="/signup">Signup</a>
                 </li>
                 <li>
-                    <a href="login.html">Login</a>
+                    <a href="/login">Login</a>
                 </li>
                 <li>
-                    <a href="forgot.html">Change Password</a>
+                    <a href="/forgot">Change Password</a>
                 </li>
             </ul>
         </nav>
@@ -69,27 +69,33 @@
                        <div class=" col-xs-4 col-xs-4">
                            <div class=" panel panel-primary">
                                 <div class="panel-body">
-                                      <form>    
+                                      <form action="/signup" method="POST">    
                                           <div class="panel-heading">
-                                              <h1>SIGN UP</h1>
+                                              <h3>SIGN UP</h3>
                                           </div>
                                           <div class="form-group">
-                                             <input type="Name" class="form-control" placeholder="Name" name="Name">
+                                             <input type="text" class="form-control" placeholder="Enter name" name="name" required>
                                           </div>
                                           <div class="form-group">
-                                             <input type="email" class="form-control" placeholder="Email" name="e-mail">
+                                            <input type="text" class="form-control" placeholder="Enter username" name="username" required>
+                                         </div>
+                                          <div class="form-group">
+                                             <input type="email" class="form-control" placeholder="Enter  email" name="email" required>
                                           </div>
                                           <div class="form-group">
-                                             <input type="password" class="form-control" placeholder="Password" name="password">
+                                            <input type="number" class="form-control" placeholder="Enter phone number" name="phone" required>
+                                         </div>
+                                          <div class="form-group">
+                                             <input type="password" class="form-control" placeholder="Enter password" name="password" required>
                                           </div>
                                           <div class="form-group">
-                                             <input type="password" class="form-control" placeholder="confirm Password" name="confirmpassword">
+                                             <input type="password" class="form-control" placeholder="confirm Password" name="confirmpassword" required>
                                           </div>
-                                           <a href="login.html" <button type="submit" name="Submit" class="btn btn-primary">Sign-in</button></a>
-                                      </form><br/>
+                                           <input type="submit" value="submit">
+                                      </form>
                                 </div>
                                 <div class="panel-footer">
-                                  <p>Have an account? <a href="login.html">Register</a></p>
+                                  <p>Have an account? <a href="/login">Login</a></p>
                                 </div>                      
                            </div>
                        </div>  

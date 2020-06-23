@@ -7,10 +7,11 @@ var  bodyparser=require("body-parser")
 app.use(bodyparser.urlencoded({extended:true}))
 var methodOverride= require("method-override")
 app.use(methodOverride("method"))
+require('dotenv').config();
 
 // +++++++++++++++ Mongoose setup +++++++++++++++++++
 var mongoose=require("mongoose")
-mongoose.connect("mongodb://localhost/smart-parking",{useNewUrlParser:true,useUnifiedTopology:true},function(err){
+mongoose.connect("mongodb://localhost/smart-parking",{useNewUrlParser:true,useUnifiedTopology:true,useCreateIndex:true},function(err){
     if(err){
         console.log("Cannot connect to database")
     }
@@ -19,14 +20,35 @@ mongoose.connect("mongodb://localhost/smart-parking",{useNewUrlParser:true,useUn
 
 // ++++++++++++++++++ Models +++++++++++++++++++
 var slot=require("./models/slots")
+var user=require("./models/user")
+
+//++++++++++++ Passport initilize ++++++++++++++++++++
+var passport=require("passport")
+var localStratagy=require("passport-local")
+var expressSessions=require("express-session")
+
+app.use(expressSessions({
+    secret:process.env.SECRET,
+    resave: false,
+    saveUninitialized :false
+}))
+app.use(passport.initialize())
+app.use(passport.session())
 
 
+//++++++++++++ Passport use ++++++++++++++++++++
+passport.use(new localStratagy(user.authenticate()))
+passport.serializeUser(user.serializeUser())
+passport.deserializeUser(user.deserializeUser())
+
+
+
+// +++++++++++++ Routes +++++++++++++++++++++
 
 app.get("/",function(req,res){
     res.render("landing")
 })
 
-// +++++++++++++ Routes +++++++++++++++++++++
 app.get("/slots",function(req,res){
     slot.find({},function(err,slots){
         if(err){
