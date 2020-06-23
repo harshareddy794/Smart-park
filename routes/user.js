@@ -24,12 +24,35 @@ router.post("/signup",function(req,res){
                 console.log(err)
             }else{
                 res.send("Successfully signed up plases login")
-                console.log(foundUser)
             }
         })
     }else{
         res.send("Pass did not match")
     }
+})
+
+router.get("/login",function(req,res){
+    res.render("user/login")
+})
+
+router.post("/login",passport.authenticate("local",{
+    successRedirect: "/dashboard",
+    failureRedirect: "/login",
+}),function(req,res){
+    
+})
+
+
+
+
+
+
+
+
+
+
+router.get("/forgot",function(req,res){
+    res.render("user/forgot")
 })
 
 

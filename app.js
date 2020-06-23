@@ -41,7 +41,10 @@ passport.use(new localStratagy(user.authenticate()))
 passport.serializeUser(user.serializeUser())
 passport.deserializeUser(user.deserializeUser())
 
-
+app.use(function(req, res, next){
+    res.locals.currentUser = req.user
+    next();
+});
 
 // +++++++++++++ Routes +++++++++++++++++++++
 
@@ -70,6 +73,10 @@ app.get("/addslot",function(req,res){
         }
     res.send("Done!")
     })
+})
+
+app.get("/dashboard",function(req,res){
+    console.log(currentUser.username)
 })
 // +++++++++++++ user routes +++++++++++++++
 
