@@ -19,8 +19,9 @@ mongoose.connect("mongodb://localhost/smart-parking",{useNewUrlParser:true,useUn
 
 
 // ++++++++++++++++++ Models +++++++++++++++++++
-var slot=require("./models/slots")
+var slot=require("./models/slot")
 var user=require("./models/user")
+
 
 //++++++++++++ Passport initilize ++++++++++++++++++++
 var passport=require("passport")
@@ -46,47 +47,55 @@ app.use(function(req, res, next){
     next();
 });
 
+
 // +++++++++++++ Routes +++++++++++++++++++++
 
 app.get("/",function(req,res){
     res.render("landing")
 })
 
-app.get("/slots",function(req,res){
-    slot.find({},function(err,slots){
-        if(err){
-            console.log(err)
-        }else{
-            res.send(slots)
-        }
-    })
-})
-app.get("/addslot",function(req,res){
-    newslot={
-        slotnumber:1,
-        slotCapacity:1,
-        avaliablity: false
-    }
-    slot.create(newslot,function(err){
-        if(err){
-            res.send(err)
-        }
-    res.send("Done!")
-    })
+app.get("/dashboard",function(req,res){
+    res.render('dashboard')
 })
 
-app.get("/dashboard",function(req,res){
-    console.log(currentUser.username)
-})
+
 // +++++++++++++ user routes +++++++++++++++
 
 var userRoutes=require("./routes/user")
 app.use(userRoutes)
+var bookingRoutes=require("./routes/booking")
+app.use(bookingRoutes)
+
 
 // +++++++++++ App listening ++++++++++++++++++++
-
-
 app.listen(3000,"127.0.0.1",function(){
     console.log("app is listening")
 })
 
+
+// +++++++++++ Middle ware ++++++++++++++++
+function isLoggedIn(req,res,next){
+    if(req.isAuthenticated()){
+        return next()
+    }else{
+        // req.flash("error","You must be logged in first")
+        res.redirect("/login")
+    }
+}
+
+
+// ++++++++++++++++ Creation of slots ++++++++++++++++++++
+// var i=0
+// for(i=0;i<10;i++){
+//     newslot={
+//         slotnumber:i+1
+//     }
+//     slot.create(newslot,function(err,slot){
+//         if(err){
+//             console.log(err)
+//         }else{
+//             console.log(slot)
+//         }
+//     })
+// }
+// console.log("Done creation of slots")

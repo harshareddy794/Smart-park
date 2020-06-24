@@ -6,6 +6,16 @@ var passport=require("passport")
 
 // +++++++ User Routes +++++++++++++
 
+router.get("/userdashboard",isLoggedIn,function(req,res){
+    user.findById(req.user._id,function(err,foundUser){
+        if(err){
+            console.log(err)
+        }else{
+            res.render("user/userdashboard",{user:foundUser})
+        }
+    })
+})
+
 router.get("/signup",function(req,res){
     res.render("user/signup")
 })
@@ -58,3 +68,13 @@ router.get("/logout",function(req,res){
 
 // Export models
 module.exports=router
+
+// +++++++++++ Middle ware ++++++++++++++++
+function isLoggedIn(req,res,next){
+    if(req.isAuthenticated()){
+        return next()
+    }else{
+        // req.flash("error","You must be logged in first")
+        res.redirect("/login")
+    }
+}

@@ -1,0 +1,129 @@
+<html>
+<head>
+    <title>E-parking</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+    <!-- Font Awesome JS -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+    <%- include("../partials/navbar") -%>
+    
+            <div class="container emp-profile">
+                 <form method="post">
+                       <div class="row">
+                          <div class="col-md-6">
+                              <div class="profile-head">
+                                  <h2>
+                                    Welcome <%= user.name %>
+                                  </h2>
+                                  <br>
+                                  <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                         <li class="nav-item">
+                                              <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+                                         </li>
+                                         <li class="nav-item">
+                                              <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Previous Bookings</a>
+                                         </li>
+                                  </ul>
+                             </div>
+                          </div>
+                          <div class="col-md-2">
+                              <a class="profile-edit-btn" name="btnAddMore" value="Edit Profile" href="#">Edit Profile</a>
+                          </div>
+                       </div>
+                       <div class="row">
+                           <div class="col-md-8">
+                               <div class="tab-content profile-tab" id="myTabContent">
+                                   <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                       <div class="row">
+                                           <div class="col-md-6">
+                                                <label>Username</label>
+                                           </div>
+                                           <div class="col-md-6">
+                                                <p><%= user.username %></p>
+                                           </div>
+                                       </div>
+                                       <div class="row">
+                                           <div class="col-md-6">
+                                               <label>name</label>
+                                           </div>
+                                           <div class="col-md-6">
+                                                <p><%= user.name %></p>
+                                           </div>
+                                       </div>                                      
+                                        <div class="row">
+                                           <div class="col-md-6">
+                                                <label>E-mail</label>
+                                           </div>
+                                           <div class="col-md-6">
+                                                <p><%= user.email %></p>
+                                           </div>
+                                       </div>
+                                       <div class="row">
+                                           <div class="col-md-6">
+                                                <label>phone No</label>
+                                           </div>
+                                           <div class="col-md-6">
+                                                <p><%= user.phone %></p>
+                                           </div>
+                                       </div> 
+                                   </div>    
+                                   <div class="tab-pane fade" id="profile" role=tabpanel" aria-labelledby="profile-tab">
+                                      <div class="row">
+                                         <div class="col-md-20">
+                                           <table boder="2">
+                                             <tr>
+                                              <th width="150">Booking Id</th>
+                                              <th width="150">Car Name</th>
+                                              <th width="150">Car Number</th>
+                                              <th width="150">Date</th>
+                                              <th width="150">In Tme</th>
+                                              <th width="150">Out Time</th> 
+                                             </tr>
+                                             <tr>
+                                              <td width="150">A1276d5</td>
+                                              <td width="150">Alto 800</td>
+                                              <td width="150">AP056784</td>
+                                              <td width="150">06/12/2019</td>
+                                              <td width="150">10:00Am</td>
+                                              <td width="150">12:20Pm</td> 
+                                             </tr>
+                                             <tr>
+                                              <td width="150">AA12341</td>
+                                              <td width="150">Swift dzire</td>
+                                              <td width="150">AP04532</td>
+                                              <td width="150">27/01/2020</td>
+                                              <td width="150">6:00pm</td>
+                                              <td width="150">9:32Pm</td> 
+                                             </tr>
+                                             <tr>
+                                              <td width="150">AB5673</td>
+                                              <td width="150">Honda jazz</td>
+                                              <td width="150">AP05154</td>
+                                              <td width="150">20/05/2020</td>
+                                              <td width="150">11:00Am</td>
+                                              <td width="150">1:20Pm</td> 
+                                             </tr>
+                                           </table>                                                                     
+                                         </div>
+                                      </div>
+                                   </div> 
+                               </div>
+                           </div>
+                       </div>
+                 </form>
+            </div>
+        </div>
+    </div>
+
+    <%- include("../partials/footer") -%>

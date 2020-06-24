@@ -5,7 +5,7 @@ userSchema=new mongoose.Schema({
         type:String,
         required: true,
     },
-    username: {
+    username:{
         type: String, 
         unique: true, 
         required: true
