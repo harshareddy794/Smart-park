@@ -45,11 +45,25 @@ router.get("/login",function(req,res){
     res.render("user/login")
 })
 
+
 router.post("/login",passport.authenticate("local",{
     successRedirect: "/dashboard",
     failureRedirect: "/login",
-}),function(req,res){
-    
+}),function(req,res){  
+})
+
+
+router.get("/editprofile",isLoggedIn,function(req,res){
+    res.render("user/editprofile")
+})
+
+router.post("/editprofile",isLoggedIn,function(req,res){
+    newUser={
+        name:req.body.name,
+        email:req.body.email,
+        phone:req.body.phone
+    }
+    console.log(newUser)
 })
 
 

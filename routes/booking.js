@@ -3,7 +3,7 @@ var router=express.Router({mergeParams: true})
 var booking = require("../models/booking")
 var slot=require("../models/slot")
 
-router.get("/slotsdashboard",isLoggedIn,function(req,res){
+router.get("/slotsdashboard",function(req,res){
     slot.find({},function(err,foundslots){
         if(err){
             console.log(err)

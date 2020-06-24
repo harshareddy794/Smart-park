@@ -85,11 +85,12 @@ function isLoggedIn(req,res,next){
 
 
 // ++++++++++++++++ Creation of slots ++++++++++++++++++++
-// var i=0
-// for(i=0;i<10;i++){
+// var count=1
+// for(var i=0;i<10;i++){
 //     newslot={
-//         slotnumber:i+1
+//         slotnumber:count
 //     }
+//     count++
 //     slot.create(newslot,function(err,slot){
 //         if(err){
 //             console.log(err)
