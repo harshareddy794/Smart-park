@@ -5,6 +5,7 @@ var passport=require("passport")
 
 
 // +++++++ User Routes +++++++++++++
+
 router.get("/signup",function(req,res){
     res.render("user/signup")
 })
@@ -17,8 +18,6 @@ router.post("/signup",function(req,res){
             email:req.body.email,
             phone:req.body.phone
         }
-        console.log(req.body)
-        console.log(newUser)
         user.register(newUser,req.body.password,function(err,foundUser){
             if(err){
                 console.log(err)
@@ -30,6 +29,7 @@ router.post("/signup",function(req,res){
         res.send("Pass did not match")
     }
 })
+
 
 router.get("/login",function(req,res){
     res.render("user/login")
@@ -43,17 +43,15 @@ router.post("/login",passport.authenticate("local",{
 })
 
 
-
-
-
-
-
-
-
-
-router.get("/forgot",function(req,res){
-    res.render("user/forgot")
+router.get("/logout",function(req,res){
+    req.logOut()
+    // req.flash("success","Logged you out succesfully!")
+    res.redirect("/")
 })
+
+
+
+
 
 
 
