@@ -70,15 +70,8 @@ router.post("/editprofile",isLoggedIn,function(req,res){
 
 
 
-router.get("/currentbookings",function(req,res){
-    booking.find({'user.id':'req.user._id'},function(err,bookings){
-        if(err){
-            console.log(err)
-        }else{
-            res.send(bookings)
-        }
-    }) 
-})
+
+
 
 
 

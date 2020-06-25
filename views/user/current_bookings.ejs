@@ -15,7 +15,33 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <%- include("../partials/navbar") -%>  
-    <h1>Current Bookings</h1>
 
+    <%- include("../partials/navbar") -%>  
+    <h1 style="margin-left: 10%;">Current Bookings</h1>
+    <div>
+        <table class="table table-dark">
+            <thead>
+              <tr>
+                <th scope="col">Booking ID</th>
+                <th scope="col">Slot number</th>
+                <th scope="col">Checkin</th>
+                <th scope="col">Checkout</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+                <% bookings.forEach(function(booking){  %> 
+                    <% if(!booking.checkedout){ %>
+                <tr>
+                    <th scope="row"><%= booking._id  %></th>
+                    <td><%= booking.slot.slotnumber  %></td>
+                    <td><%= booking.checkin %></td>
+                    <td><%= booking.checkout  %></td>
+                    <td><form action="/currentbookings/<%= booking._id  %>" method="post"><input type="submit" value="Checkout Now" class="btn btn-info"></form></td>
+                </tr>
+            <%  } %>
+             <%   }) %>
+            </tbody>
+          </table>
+    </div>
     <%- include("../partials/footer") -%>

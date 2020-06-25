@@ -66,6 +66,40 @@ router.post("/bookslot/:id",isLoggedIn,function(req,res){
     })
 })
 
+router.get("/currentbookings",isLoggedIn,function(req,res){
+    booking.find().where('user.id').equals(req.user._id).exec(function(err,bookings){
+        if(err){
+            console.log(err)
+        }else{
+            res.render("user/current_bookings",{bookings:bookings})
+        }
+    })
+})
+
+
+router.post("/currentbookings/:id",isLoggedIn,function(req,res){
+    newBooking={
+        checkedout:true,
+        checkout:Date.now()
+    }
+    booking.findByIdAndUpdate(req.params.id,newBooking,function(err,foundBooking){
+        if(err){
+            console.log(err)
+        }else{
+            newSlot={
+                avaliablity:true
+            }
+            slot.findByIdAndUpdate(foundBooking.slot.id,newSlot,function(err,foundSlot){
+                if(err){
+                    console.log(err)
+                }else{
+                    res.redirect("/dashboard")
+                }
+            })
+        }
+    })
+})
+
 
 // Export models
 module.exports=router

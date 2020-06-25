@@ -1,5 +1,4 @@
 var mongoose=require("mongoose")
-const { checkout } = require("../routes/user")
 bookingsSchema=new mongoose.Schema({
     checkin:{type:Date,default:Date.now},
     checkout:Date,
