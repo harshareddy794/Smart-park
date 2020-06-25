@@ -10,7 +10,8 @@ var passport=require("passport")
 router.get("/userdashboard",isLoggedIn,function(req,res){
     user.findById(req.user._id,function(err,foundUser){
         if(err){
-            console.log(err)
+            req.flash("error","Something went wrong")
+            res.redirect("back")
         }else{
             res.render("user/userdashboard",{user:foundUser})
         }
@@ -31,13 +32,16 @@ router.post("/signup",function(req,res){
         }
         user.register(newUser,req.body.password,function(err,foundUser){
             if(err){
-                console.log(err)
+                req.flash("error","Something went wrong")
+                res.redirect("back")
             }else{
-                res.send("/userdashboard")
+                req.flash("success","Successfully signed up. Login here now")
+                res.send("/login")
             }
         })
     }else{
-        res.send("Pass did not match")
+        req.flash("error","Passwords did not match")
+        res.redirect("back")
     }
 })
 
@@ -49,10 +53,11 @@ router.get("/login",function(req,res){
 
 router.post("/login",passport.authenticate("local",{
     successRedirect: "/dashboard",
+    successFlash:"Logged in successfully",
     failureRedirect: "/login",
-}),function(req,res){  
+    failureFlash:true
+}),function(req,res){
 })
-
 
 router.get("/editprofile",isLoggedIn,function(req,res){
     res.render("user/editprofile")
@@ -66,8 +71,10 @@ router.post("/editprofile",isLoggedIn,function(req,res){
     }
     user.findByIdAndUpdate(req.user._id,newUser,function(err,foundUser){
         if(err){
-            console.log(err)
+            req.flash("error","Something went wrong")
+            res.redirect("back")
         }else{
+            req.flash("success","Profile is updated successfully")
             res.redirect("/userdashboard")
         }
     })
@@ -76,8 +83,8 @@ router.post("/editprofile",isLoggedIn,function(req,res){
 
 router.get("/logout",function(req,res){
     req.logOut()
-    // req.flash("success","Logged you out succesfully!")
-    res.redirect("/")
+    req.flash("success","Logged you out succesfully!")
+    res.redirect("/dashboard")
 })
 
 
@@ -89,7 +96,7 @@ function isLoggedIn(req,res,next){
     if(req.isAuthenticated()){
         return next()
     }else{
-        // req.flash("error","You must be logged in first")
+        req.flash("error","You must be logged in first")
         res.redirect("/login")
     }
 }

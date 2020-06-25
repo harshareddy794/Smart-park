@@ -8,6 +8,8 @@ app.use(bodyparser.urlencoded({extended:true}))
 var methodOverride= require("method-override")
 app.use(methodOverride("method"))
 require('dotenv').config();
+var flash=require("connect-flash")
+app.use(flash())
 
 // +++++++++++++++ Mongoose setup +++++++++++++++++++
 var mongoose=require("mongoose")
@@ -43,7 +45,9 @@ passport.serializeUser(user.serializeUser())
 passport.deserializeUser(user.deserializeUser())
 
 app.use(function(req, res, next){
-    res.locals.currentUser = req.user
+    res.locals.currentUser = req.user,
+    res.locals.error=req.flash("error")
+    res.locals.success= req.flash("success")
     next();
 });
 

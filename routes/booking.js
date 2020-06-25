@@ -6,7 +6,8 @@ var slot=require("../models/slot")
 router.get("/slotsdashboard",function(req,res){
     slot.find({},function(err,foundslots){
         if(err){
-            console.log(err)
+            req.flash("error","Something went wrong")
+            res.redirect("back")
         }else{
             res.render("slots/slotsdashboard",{slots:foundslots})
         }
@@ -16,7 +17,8 @@ router.get("/slotsdashboard",function(req,res){
 router.get("/bookslot/:id",isLoggedIn,function(req,res){
     slot.findById(req.params.id,function(err,foundSlot){
         if(err){
-            console.log(err)
+            req.flash("error","Something went wrong")
+            res.redirect("back")
         }else{
             res.render("slots/booking",{slot:foundSlot})
         }
@@ -26,7 +28,8 @@ router.get("/bookslot/:id",isLoggedIn,function(req,res){
 router.post("/bookslot/:id",isLoggedIn,function(req,res){
     slot.findById(req.params.id,function(err,foundSlot){
         if(err){
-            console.log(err)
+            req.flash("error","Something went wrong")
+            res.redirect("back")
         }else{
             if(foundSlot.slotCapacity==req.body.capacity){
                 var newUser={
@@ -42,25 +45,28 @@ router.post("/bookslot/:id",isLoggedIn,function(req,res){
                     user:newUser,
                     slot:newSlot
                 }
-                console.log(book)
                 booking.create(book,function(err,newBooking){
                     if(err){
-                        console.log(err)
+                        req.flash("error","Something went wrong")
+                        res.redirect("back")
                     }else{
                         update={
                             avaliablity:false
                         }
                         slot.findByIdAndUpdate(req.params.id,update,function(err,foundSlot){
                             if(err){
-                                console.log(err)
+                                req.flash("error","Something went wrong")
+                                res.redirect("back")
                             }else{
+                                req.flash("success","Successfully slot has booked")
                                 res.redirect("/dashboard")
                             }
                         })
                     }
                 })
             }else{
-                res.send("This slot is not compitable")
+                req.flash("error","This slot is not compitable for your requirements")
+                res.redirect("back")
             }
         }
     })
@@ -69,7 +75,8 @@ router.post("/bookslot/:id",isLoggedIn,function(req,res){
 router.get("/currentbookings",isLoggedIn,function(req,res){
     booking.find().where('user.id').equals(req.user._id).exec(function(err,bookings){
         if(err){
-            console.log(err)
+            req.flash("error","Something went wrong")
+            res.redirect("back")
         }else{
             res.render("user/current_bookings",{bookings:bookings})
         }
@@ -84,15 +91,18 @@ router.post("/currentbookings/:id",isLoggedIn,function(req,res){
     }
     booking.findByIdAndUpdate(req.params.id,newBooking,function(err,foundBooking){
         if(err){
-            console.log(err)
+            req.flash("error","Something went wrong")
+            res.redirect("back")
         }else{
             newSlot={
                 avaliablity:true
             }
             slot.findByIdAndUpdate(foundBooking.slot.id,newSlot,function(err,foundSlot){
                 if(err){
-                    console.log(err)
+                    req.flash("error","Something went wrong")
+                    res.redirect("back")
                 }else{
+                    req.flash("success","Successfully slot has checked out. Thank you for booking")
                     res.redirect("/dashboard")
                 }
             })
@@ -109,7 +119,7 @@ function isLoggedIn(req,res,next){
     if(req.isAuthenticated()){
         return next()
     }else{
-        // req.flash("error","You must be logged in first")
+        req.flash("error","You must be logged in first")
         res.redirect("/login")
     }
 }
