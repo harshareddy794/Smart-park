@@ -36,7 +36,7 @@ router.post("/signup",function(req,res){
                 res.redirect("back")
             }else{
                 req.flash("success","Successfully signed up. Login here now")
-                res.send("/login")
+                res.redirect("/login")
             }
         })
     }else{

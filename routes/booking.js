@@ -2,6 +2,7 @@ var express=require("express")
 var router=express.Router({mergeParams: true})
 var booking = require("../models/booking")
 var slot=require("../models/slot")
+var nodemailer = require("nodemailer");
 
 router.get("/slotsdashboard",function(req,res){
     slot.find({},function(err,foundslots){
@@ -58,8 +59,31 @@ router.post("/bookslot/:id",isLoggedIn,function(req,res){
                                 req.flash("error","Something went wrong")
                                 res.redirect("back")
                             }else{
-                                req.flash("success","Successfully slot has booked")
-                                res.redirect("/dashboard")
+                                var smtpTransport = nodemailer.createTransport({
+                                    service: 'Gmail', 
+                                    auth: {
+                                      user:process.env.MAIL,
+                                      pass: process.env.MAILPASS
+                                    }
+                                  });
+                                  var mailOptions = {
+                                    to: req.user.email,
+                                    from: 'admin-smart-park@gmail.com',
+                                    subject: 'Slot booking confirmation',
+                                    text: 'We have successfully booked slot numer '+foundSlot.slotnumber+
+                                    ' for you.\n Kindly come back to us again and free up the parking slot which will be helpful for many people like you.\n\n'+
+                                    'Thanks and regards\n'+
+                                    'Admin-Smart parking slots'
+                                  };
+                                  smtpTransport.sendMail(mailOptions, function(err) {
+                                      if(err){
+                                          console.log(err)
+                                        res.redirect("back")
+                                      }else{
+                                        req.flash('success', 'Booking has done and a mail has been sent to your e-mail about booking details');
+                                        res.redirect("/dashboard")
+                                    }
+                                })      
                             }
                         })
                     }
