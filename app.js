@@ -11,7 +11,7 @@ require('dotenv').config();
 
 // +++++++++++++++ Mongoose setup +++++++++++++++++++
 var mongoose=require("mongoose")
-mongoose.connect("mongodb://localhost/smart-parking",{useNewUrlParser:true,useUnifiedTopology:true,useCreateIndex:true},function(err){
+mongoose.connect("mongodb://localhost/smart-parking",{useNewUrlParser:true,useUnifiedTopology:true,useCreateIndex:true,useFindAndModify:false},function(err){
     if(err){
         console.log("Cannot connect to database")
     }
@@ -71,18 +71,6 @@ app.use(bookingRoutes)
 app.listen(3000,"127.0.0.1",function(){
     console.log("app is listening")
 })
-
-
-// +++++++++++ Middle ware ++++++++++++++++
-function isLoggedIn(req,res,next){
-    if(req.isAuthenticated()){
-        return next()
-    }else{
-        // req.flash("error","You must be logged in first")
-        res.redirect("/login")
-    }
-}
-
 
 // ++++++++++++++++ Creation of slots ++++++++++++++++++++
 // var count=1

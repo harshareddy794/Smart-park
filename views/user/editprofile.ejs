@@ -18,35 +18,30 @@
     <%- include("../partials/navbar") -%>
    <div id="content">
        <div class="container emp-profile">
-           <form metho="post">
-               <div class="row">
-                    <div class="col-md-6">
-                        <div class="profile-head">
-                           <center><h3>Profile Edit</h3></center>
-                           <div class="row">               
-                                <div class="col-md-6">
-                                    <form action="/editprofile" method="post">
-                                         <div class="form-group">
-                                              <label>Name:</label>
-                                              <input type="text" class="form-control" name="name">
-                                         </div>    
-                                         <div class="form-group">
-                                              <label>E-mail:</label>
-                                              <input type="email" class="form-control" name="email">
-                                         </div>
-                                         <div class="form-group">
-                                               <label>Phone no:</label>
-                                               <input type="text" class="form-control" name="phone">
-                                         </div>
-                                         <input type="submit" class="btn btn-primary" value="Submit">
-                                    </form>
-                                        <a class="btn btn-info" href="/dashboard">back</a> 
-                                </div>
-                           </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="profile-head">
+                        <center><h3>Profile Edit</h3></center>
+                        <div class="row">               
+                            <div class="col-md-6">
+                                <form action="/editprofile" method="post">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="Enter Name" name="name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="email" class="form-control" placeholder="Enter Email" name="email" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="number" class="form-control" placeholder="Enter Phone number" name="phone">
+                                    </div>
+                                    <input type="submit" class="btn btn-primary" value="Submit">
+                                </form>
+                                <a class="btn btn-info" href="/dashboard">back</a> 
+                            </div>
                         </div>
                     </div>
-               </div>
-           </form> 
+                </div>
+            </div>
        </div>                                             
    </div>
    <%- include("../partials/footer") -%>

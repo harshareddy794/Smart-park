@@ -33,7 +33,7 @@ router.post("/signup",function(req,res){
             if(err){
                 console.log(err)
             }else{
-                res.send("Successfully signed up plases login")
+                res.send("/userdashboard")
             }
         })
     }else{
@@ -64,15 +64,14 @@ router.post("/editprofile",isLoggedIn,function(req,res){
         email:req.body.email,
         phone:req.body.phone
     }
-    console.log(newUser)
+    user.findByIdAndUpdate(req.user._id,newUser,function(err,foundUser){
+        if(err){
+            console.log(err)
+        }else{
+            res.redirect("/userdashboard")
+        }
+    })
 })
-
-
-
-
-
-
-
 
 
 router.get("/logout",function(req,res){
@@ -80,12 +79,6 @@ router.get("/logout",function(req,res){
     // req.flash("success","Logged you out succesfully!")
     res.redirect("/")
 })
-
-
-
-
-
-
 
 
 // Export models
