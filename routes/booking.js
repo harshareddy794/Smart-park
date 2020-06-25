@@ -71,7 +71,7 @@ router.post("/bookslot/:id",isLoggedIn,function(req,res){
                                     from: 'admin-smart-park@gmail.com',
                                     subject: 'Slot booking confirmation',
                                     text: 'We have successfully booked slot numer '+foundSlot.slotnumber+
-                                    ' for you.\n Kindly come back to us again and free up the parking slot which will be helpful for many people like you.\n\n'+
+                                    ' for you.\nKindly come back to us again and free up the parking slot which will be helpful for many people like you.\n\n'+
                                     'Thanks and regards\n'+
                                     'Admin-Smart parking slots'
                                   };
@@ -80,8 +80,20 @@ router.post("/bookslot/:id",isLoggedIn,function(req,res){
                                           console.log(err)
                                         res.redirect("back")
                                       }else{
-                                        req.flash('success', 'Booking has done and a mail has been sent to your e-mail about booking details');
-                                        res.redirect("/dashboard")
+                                        const accountSid =process.env.SID ;
+                                        const authToken = process.env.Token;
+                                        const client = require('twilio')(accountSid, authToken);
+                                        client.messages
+                                              .create({
+                                                 from: 'whatsapp:+14155238886',
+                                                 to: 'whatsapp:+91'+req.user.phone,
+                                                 body: 'We have successfully booked slot numer '+foundSlot.slotnumber+
+                                                 ' for you.\nKindly come back to us again and free up the parking slot which will be helpful for many people like you.\n\n'+
+                                                 'Thanks and regards\n'+
+                                                 'Admin-Smart parking slots'
+                                               })
+                                                req.flash('success', 'Booking has done and a mail has been sent to your e-mail and a Whatsapp message about booking details');
+                                                res.redirect("/dashboard")
                                     }
                                 })      
                             }
