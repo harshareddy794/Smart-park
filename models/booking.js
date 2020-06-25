@@ -1,4 +1,5 @@
 var mongoose=require("mongoose")
+const { checkout } = require("../routes/user")
 bookingsSchema=new mongoose.Schema({
     checkin:{type:Date,default:Date.now},
     checkout:Date,
@@ -15,7 +16,8 @@ bookingsSchema=new mongoose.Schema({
            ref: "slot"
         },
         slotnumber:Number
-    }
+    },
+    checkedout:{type:Boolean,default:false}
 })
 
 module.exports=mongoose.model("bookings",bookingsSchema)

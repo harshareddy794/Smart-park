@@ -1,5 +1,6 @@
 var express=require("express")
-const user = require("../models/user")
+var user = require("../models/user")
+var booking = require("../models/booking")
 var router=express.Router({mergeParams: true})
 var passport=require("passport")
 
@@ -65,6 +66,20 @@ router.post("/editprofile",isLoggedIn,function(req,res){
     }
     console.log(newUser)
 })
+
+
+
+
+router.get("/currentbookings",function(req,res){
+    booking.find({'user.id':'req.user._id'},function(err,bookings){
+        if(err){
+            console.log(err)
+        }else{
+            res.send(bookings)
+        }
+    }) 
+})
+
 
 
 router.get("/logout",function(req,res){

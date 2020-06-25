@@ -47,7 +47,16 @@ router.post("/bookslot/:id",isLoggedIn,function(req,res){
                     if(err){
                         console.log(err)
                     }else{
-                        res.send(newBooking)
+                        update={
+                            avaliablity:false
+                        }
+                        slot.findByIdAndUpdate(req.params.id,update,function(err,foundSlot){
+                            if(err){
+                                console.log(err)
+                            }else{
+                                res.redirect("/dashboard")
+                            }
+                        })
                     }
                 })
             }else{
