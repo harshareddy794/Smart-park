@@ -1,6 +1,6 @@
 var mongoose=require("mongoose")
 bookingsSchema=new mongoose.Schema({
-    checkin:Date,
+    checkin:{type:Date,default:Date.now},
     checkout:Date,
     user:{
         id:{

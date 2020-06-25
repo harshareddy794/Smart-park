@@ -86,10 +86,24 @@ function isLoggedIn(req,res,next){
 
 // ++++++++++++++++ Creation of slots ++++++++++++++++++++
 // var count=1
-// for(var i=0;i<10;i++){
-//     newslot={
-//         slotnumber:count
+// for(var i=0;i<20;i++){
+//     size=2
+//     avl=true
+//     if(count>1 && count <10){
+//         size=1
 //     }
+//     if(count%5==0){
+//         size=3
+//     }
+//     if(count%3==0){
+//         avl=false
+//     }
+//     newslot={
+//         slotnumber:count,
+//         slotCapacity:size,
+//         avaliablity:avl
+//     }
+
 //     count++
 //     slot.create(newslot,function(err,slot){
 //         if(err){

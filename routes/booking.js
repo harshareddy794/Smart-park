@@ -13,6 +13,50 @@ router.get("/slotsdashboard",function(req,res){
     })
 })
 
+router.get("/bookslot/:id",isLoggedIn,function(req,res){
+    slot.findById(req.params.id,function(err,foundSlot){
+        if(err){
+            console.log(err)
+        }else{
+            res.render("slots/booking",{slot:foundSlot})
+        }
+    })
+})
+
+router.post("/bookslot/:id",isLoggedIn,function(req,res){
+    slot.findById(req.params.id,function(err,foundSlot){
+        if(err){
+            console.log(err)
+        }else{
+            if(foundSlot.slotCapacity==req.body.capacity){
+                var newUser={
+                    id:req.user._id,
+                    username:req.user.username
+                }
+                var newSlot={
+                    id:foundSlot._id,
+                    slotnumber:foundSlot.slotnumber
+                }
+                book={
+                    checkout:req.body.date+' '+req.body.time,
+                    user:newUser,
+                    slot:newSlot
+                }
+                console.log(book)
+                booking.create(book,function(err,newBooking){
+                    if(err){
+                        console.log(err)
+                    }else{
+                        res.send(newBooking)
+                    }
+                })
+            }else{
+                res.send("This slot is not compitable")
+            }
+        }
+    })
+})
+
 
 // Export models
 module.exports=router
