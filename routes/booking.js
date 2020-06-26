@@ -146,6 +146,17 @@ router.post("/currentbookings/:id",isLoggedIn,function(req,res){
     })
 })
 
+router.get("/bookinghistory",isLoggedIn,function(req,res){
+    booking.find().where('user.id').equals(req.user._id).exec(function(err,bookings){
+        if(err){
+            req.flash("error","Something went wrong")
+            res.redirect("back")
+        }else{
+            res.render("slots/booking_history",{bookings:bookings})
+        }
+    })
+})
+
 
 // Export models
 module.exports=router
