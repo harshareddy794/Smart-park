@@ -39,7 +39,7 @@ This is a project done for smart virtual hackthon 2020 orgainized by school of c
 * [Harsha](https://www.linkedin.com/in/harshareddy794)-Backend Developement
 * [Sai ram](https://www.linkedin.com/in/sairam2011821/)- Frontend Developement
 * [Narayan pavan](https://www.linkedin.com/in/narayanpavan/)- Frontend Developement
-* [Jakka Mithil sai](https://www.linkedin.com/in/mithil1729/)- UI/UX Developement
+* [Jakka Mithil sai](https://www.linkedin.com/in/mithil1729/)- UI/UX, Frontend Developement
 
 ## Inital setup
  1. Clone github repository locally using terminal using command
